@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mogul Partners | Real Estate Intelligence</title>
+    
+    <!-- Fontes de Elite -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Manrope:wght@200;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- MOGUL DESIGN SYSTEM --- */
+        :root {
+            --bg: #050505;
+            --surface: #0F0F0F;
+            --gold: #D4AF37;
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #AA8540 100%);
+            --text-main: #FFFFFF;
+            --text-muted: #888888;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            font-family: 'Manrope', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMAÇÕES DE SCROLL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HERO: O PORTAL --- */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('hero.jpg'); /* IMAGEM 1 */
+            background-size: cover; background-position: center;
+            filter: brightness(0.4);
+            z-index: 1;
+            animation: zoomIn 20s infinite alternate;
+        }
+
+        .hero-content { position: relative; z-index: 10; max-width: 800px; padding: 20px; }
+
+        .hero-tag {
+            font-size: 0.8rem; letter-spacing: 6px; text-transform: uppercase;
+            color: var(--gold); font-weight: 800; margin-bottom: 20px; display: block;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            line-height: 0.95;
+            background: linear-gradient(to bottom, #FFF, #AAA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            animation: fadeUp 1.5s ease;
+        }
+
+        .btn-gold {
+            display: inline-block;
+            padding: 18px 45px;
+            background: var(--gold-gradient);
+            color: #000;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 2px; /* Estilo luxo quadrado */
+            transition: 0.3s;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            animation: fadeUp 1.8s ease;
+        }
+        .btn-gold:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(212, 175, 55, 0.6); }
+
+        /* --- ZIG ZAG SECTIONS --- */
+        .zigzag-section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .zigzag-section.reverse { flex-direction: row-reverse; }
+
+        .zigzag-img {
+            flex: 1;
+            height: 500px;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+        }
+        .zigzag-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .zigzag-img:hover img { transform: scale(1.05); }
+
+        .zigzag-text { flex: 1; text-align: left; }
+        
+        .section-label { color: var(--gold); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; display: block; font-size: 0.9rem; }
+        .section-heading { font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 25px; line-height: 1.2; }
+        .section-desc { font-size: 1.1rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 30px; font-weight: 300; }
+
+        /* CAIXAS DE OBSERVAÇÃO (GLASS) */
+        .tip-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 2px solid var(--gold);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+        .tip-box strong { color: #FFF; display: block; margin-bottom: 5px; font-family: 'Cinzel'; }
+        .tip-box p { color: #999; font-size: 0.9rem; margin: 0; }
+
+        /* --- GRÁFICOS / DADOS --- */
+        .data-section {
+            background: #080808;
+            padding: 100px 5%;
+            text-align: center;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+        }
+
+        .chart-container {
+            max-width: 800px;
+            margin: 50px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .chart-row { display: flex; align-items: center; gap: 20px; }
+        .chart-label { width: 150px; text-align: right; font-weight: 600; color: #888; }
+        
+        .chart-bar-bg { flex: 1; height: 40px; background: #1A1A1A; border-radius: 4px; overflow: hidden; position: relative; }
+        .chart-bar-fill { height: 100%; display: flex; align-items: center; justify-content: flex-end; padding-right: 15px; font-weight: 800; color: #000; width: 0; transition: width 2s ease-out; }
+        
+        .fill-low { background: #333; color: #888; width: 20%; } /* Controlado via JS */
+        .fill-high { background: var(--gold-gradient); width: 95%; box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+
+        /* --- PORTFÓLIO LINKS --- */
+        .portfolio-section { padding: 100px 20px; text-align: center; }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+
+        .demo-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.3s;
+            text-decoration: none;
+            text-align: left;
+        }
+        .demo-card:hover { transform: translateY(-10px); border-color: var(--gold); }
+        
+        .demo-preview { height: 200px; background: #222; display: flex; align-items: center; justify-content: center; color: #444; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
+        .demo-content { padding: 25px; }
+        .demo-title { color: #FFF; font-family: 'Cinzel'; font-size: 1.4rem; margin-bottom: 10px; }
+        .demo-desc { color: #888; font-size: 0.9rem; }
+
+        /* --- FOOTER --- */
+        .footer { padding: 50px 20px; text-align: center; color: #444; font-size: 0.8rem; border-top: 1px solid #111; }
+        .social-link { color: var(--gold); text-decoration: none; font-weight: 700; font-size: 1rem; margin-top: 10px; display: inline-block; }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3rem; }
+            .zigzag-section { flex-direction: column; padding: 60px 20px; }
+            .zigzag-section.reverse { flex-direction: column; }
+            .zigzag-img { width: 100%; height: 300px; }
+            .chart-row { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .chart-label { text-align: left; margin-bottom: 5px; }
+            .chart-bar-bg { width: 100%; }
+        }
+        
+        @keyframes zoomIn { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <span class="hero-tag">MOGUL PARTNERS</span>
+            <h1 class="hero-title">O Físico nunca<br>foi o final.</h1>
+            <p style="color:#CCC; margin-bottom:30px; font-size:1.1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Transformamos imóveis de alto padrão em ativos digitais imersivos. A evolução da venda para o mercado de luxo.
+            </p>
+            <a href="https://instagram.com/mogul_partners" class="btn-gold">Iniciar Projeto</a>
+        </div>
+    </header>
+
+    <!-- PROBLEMA (ZIG) -->
+    <section class="zigzag-section reveal">
+        <div class="zigzag-img">
+            <img src="caos.jpg" alt="WhatsApp Caótico"> <!-- IMAGEM 2 -->
+        </div>
+        <div class="zigzag-text">
+            <span class="section-label">O Problema</span>
+            <h2 class="section-heading">A "Venda Cega" destrói seu valor.</h2>
+            <p class="section-desc">
+                Enviar 30 fotos soltas no WhatsApp ou um link de portal genérico é o jeito mais rápido de perder um cliente de R$ 5 Milhões. A elite não compra confusão, compra clareza e exclusividade.
+            </p>
+            <div class="tip-box">
+                <strong>O Fato:</strong>
+                <p>Clientes High Ticket decidem nos primeiros 3 segundos se o imóvel vale o tempo deles. Apresentação é tudo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUÇÃO (ZAG) -->
+    <section class="zigzag-section reverse reveal">
+        <div class="zigzag-img">
+            <img src="solucao.jpg" alt="Site Mogul no Celular"> <!-- IMAGEM 3 -->
+        </div>
+        <div class="zigzag-text">
+            <span class="section-label">A Tecnologia Mogul</span>
+            <h2 class="section-heading">O "Santo Graal" da Apresentação.</h2>
+            <p class="section-desc">
+                Criamos um ambiente digital exclusivo para cada propriedade. Sem concorrentes na tela, sem distrações. Apenas o imóvel, a emoção e o seu contato. É como levar o cliente para dentro da casa antes dele sair do sofá.
+            </p>
+            <div class="tip-box">
+                <strong>UX/UI de Cinema:</strong>
+                <p>Nossos layouts usam psicologia visual para guiar o olhar do cliente para o "Sim".</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DADOS / GRÁFICO -->
+    <section class="data-section reveal">
+        <span class="section-label">Inteligência de Mercado</span>
+        <h2 class="section-heading" style="color:#FFF">Valor Percebido</h2>
+        
+        <div class="chart-container">
+            <div class="chart-row">
+                <span class="chart-label">Portal Comum</span>
+                <div class="chart-bar-bg">
+                    <div class="chart-bar-fill fill-low" id="bar1">20%</div>
+                </div>
+            </div>
+            <div class="chart-row">
+                <span class="chart-label" style="color:var(--gold)">Mogul Page</span>
+                <div class="chart-bar-bg">
+                    <div class="chart-bar-fill fill-high" id="bar2">100%</div>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top:30px; color:#666; font-size:0.9rem;">*Baseado na retenção de atenção do usuário.</p>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="portfolio-section reveal">
+        <h2 class="section-heading" style="color:#FFF">Modelos de Elite</h2>
+        <p class="section-desc">Escolha a atmosfera que seu imóvel exige.</p>
+
+        <div class="demo-grid">
+            <!-- MODELO DARK -->
+            <a href="SEU_LINK_DARK" target="_blank" class="demo-card">
+                <div class="demo-preview" style="background:url('fachada_dark.jpg') center/cover;">DARK</div>
+                <div class="demo-content">
+                    <h3 class="demo-title">The Penthouse</h3>
+                    <p class="demo-desc">Para imóveis urbanos, noturnos e modernos.</p>
+                </div>
+            </a>
+            
+            <!-- MODELO LIGHT -->
+            <a href="SEU_LINK_LIGHT" target="_blank" class="demo-card">
+                <div class="demo-preview" style="background:url('fachada.jpg') center/cover;">LIGHT</div>
+                <div class="demo-content">
+                    <h3 class="demo-title">Beach House</h3>
+                    <p class="demo-desc">Para casas de praia, campo e iluminação natural.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2 style="font-family:'Cinzel'; color:#FFF; margin-bottom:20px;">MOGUL PARTNERS</h2>
+        <p>Global Real Estate Tech Solutions</p>
+        <a href="https://instagram.com/mogul_partners" class="social-link">@mogul_partners</a>
+    </footer>
+
+    <script>
+        // Scroll Reveal Animation
+        window.addEventListener('scroll', reveal);
+        function reveal(){
+            var reveals = document.querySelectorAll('.reveal');
+            for(var i = 0; i < reveals.length; i++){
+                var windowheight = window.innerHeight;
+                var revealtop = reveals[i].getBoundingClientRect().top;
+                var revealpoint = 150;
+                if(revealtop < windowheight - revealpoint){
+                    reveals[i].classList.add('active');
+                    
+                    // Animação do Gráfico (Só quando aparece)
+                    if(reveals[i].classList.contains('data-section')) {
+                        document.getElementById('bar1').style.width = '25%';
+                        document.getElementById('bar2').style.width = '98%';
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
